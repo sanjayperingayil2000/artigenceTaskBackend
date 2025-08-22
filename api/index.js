@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import authRoutes from "./routes/auth.js";
-import postRoutes from "./routes/posts.js";
+import authRoutes from "./src/routes/auth.js";
+import postRoutes from "./src/routes/posts.js";
 import dotenv from "dotenv";
 import cors from "cors";
 
