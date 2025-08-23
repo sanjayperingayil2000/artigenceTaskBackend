@@ -13,26 +13,18 @@ const app = express();
 
 app.use(express.json({ limit: "1mb" }));
 app.use(helmet());
-// app.use(
-//   cors({
-//     origin: function (origin, callback) {
-//       const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
 
-//       // allow server-to-server or curl (no origin)
-//       if (!origin) return callback(null, true);
-
-//       if (allowedOrigins.includes(origin)) {
-//         return callback(null, true);
-//       } else {
-//         return callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//   })
-// );
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://artigence-task-ui.vercel.app", // ✅ your frontend
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 
 app.use(morgan("dev"));
+
+app.options("*", cors()); // ✅ Handle preflight requests
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
@@ -41,7 +33,6 @@ app.use("/api/posts", postsRoutes);
 
 app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 
-// ✅ Connect DB once
 connectDB()
   .then(async () => {
     await seedDefaultPost();
@@ -51,5 +42,4 @@ connectDB()
     console.error("❌ Failed to start server:", err);
   });
 
-// ✅ Export app for Vercel (no app.listen)
 export default app;
