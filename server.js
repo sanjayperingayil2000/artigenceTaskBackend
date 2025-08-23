@@ -14,17 +14,16 @@ const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(helmet());
 
-app.use(
-  cors({
-    origin: "https://artigence-task-ui.vercel.app", // ✅ your frontend
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  })
-);
+// Enable CORS for all origins
+app.use(cors({
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+}));
 
 app.use(morgan("dev"));
 
-app.options("*", cors()); // ✅ Handle preflight requests
+// Handle preflight requests for all routes
+app.options("*", cors());
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
