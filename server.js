@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import connectDB from "../src/config/db.js";
-import authRoutes from "../src/routes/auth.routes.js";
-import postsRoutes from "../src/routes/posts.routes.js";
-import seedDefaultPost from "../src/utils/seed.js";
+import connectDB from "./src/config/db.js";
+import authRoutes from "./src/routes/auth.routes.js";
+import postsRoutes from "./src/routes/posts.routes.js";
+import seedDefaultPost from "./src/utils/seed.js";
 
 dotenv.config();
 const app = express();
