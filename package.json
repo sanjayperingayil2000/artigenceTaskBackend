@@ -2,11 +2,11 @@
   "name": "office-articles-backend",
   "version": "1.0.0",
   "description": "Express + MongoDB + JWT backend for office articles app",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon api/index.js",
-    "start": "node api/index.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "lint": "eslint ."
   },
   "dependencies": {
