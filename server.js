@@ -15,10 +15,22 @@ app.use(express.json({ limit: "1mb" }));
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN?.split(",") || "*",
+    origin: function (origin, callback) {
+      const allowedOrigins = process.env.CORS_ORIGIN?.split(",") || [];
+
+      // allow server-to-server or curl (no origin)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 app.use(morgan("dev"));
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
